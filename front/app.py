@@ -86,7 +86,7 @@ def page_auth():
                     else:
                         st.error(res.get('error', '❌ Une erreur est survenue lors de l\'inscription'))
                 except Exception as e:
-                    st.error("❌ Une erreur est survenue lors de l'inscription.")
+                    st.error(f"❌ Erreur: {e}")
             return
                 
         st.markdown('</div>', unsafe_allow_html=True)
