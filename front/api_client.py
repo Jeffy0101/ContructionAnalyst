@@ -1,0 +1,38 @@
+"""Client HTTP minimal pour parler au backend Django."""
+import os
+import requests
+import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()
+API_URL = os.getenv('API_URL', 'http://localhost:8000/api')
+
+
+def _headers():
+    token = st.session_state.get('token')
+    return {'Authorization': f'Bearer {token}'} if token else {}
+
+
+def register(email, password, name):
+    return requests.post(f'{API_URL}/auth/register', json={
+        'email': email, 'password': password, 'name': name
+    }).json()
+
+def login(email, password):
+    return requests.post(f'{API_URL}/auth/login', json={
+        'email': email, 'password': password
+    }).json()
+
+def get_features():
+    return requests.get(f'{API_URL}/features').json()['features']
+
+def analyser(nom_terrain, localisation, donnees):
+    return requests.post(f'{API_URL}/analyser', json={
+        'nom_terrain': nom_terrain, 'localisation': localisation, 'donnees': donnees
+    }, headers=_headers()).json()
+
+def historique():
+    return requests.get(f'{API_URL}/historique', headers=_headers()).json()
+
+def dataset():
+    return requests.get(f'{API_URL}/dataset').json()

@@ -1,0 +1,10 @@
+venv/
+back/venv/
+back/.env
+back/db.sqlite3
+front/venv/
+front/.env
+front/__pycache__/
+*.pyc
+*.pyo
+db.sqlite3
