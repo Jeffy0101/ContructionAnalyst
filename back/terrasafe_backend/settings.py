@@ -7,15 +7,17 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY is not set")
+
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
-import dj_database_url
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('MONGO_URI', 'sqlite:///db.sqlite3')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
@@ -42,14 +44,6 @@ TEMPLATES = [{
 
 WSGI_APPLICATION = 'terrasafe_backend.wsgi.application'
 
-# On utilise MongoDB → pas de DB SQL Django
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'UTC'
@@ -68,6 +62,11 @@ REST_FRAMEWORK = {
 }
 
 # MongoDB
-MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017')
+MONGO_URI = os.getenv('MONGO_URI')
+if not MONGO_URI:
+    raise ValueError("MONGO_URI is not set")
+
 MONGO_DB = os.getenv('MONGO_DB', 'terrasafe')
 JWT_SECRET = os.getenv('JWT_SECRET', 'jwt-dev')
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'

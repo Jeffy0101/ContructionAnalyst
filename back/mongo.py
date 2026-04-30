@@ -1,0 +1,12 @@
+from pymongo import MongoClient
+import os
+
+MONGO_URI = os.getenv("MONGO_URI")
+MONGO_DB = os.getenv("MONGO_DB", "terrasafe")
+
+if not MONGO_URI:
+    raise ValueError("MONGO_URI is not set")
+
+client = MongoClient(MONGO_URI)
+
+db = client[MONGO_DB]
