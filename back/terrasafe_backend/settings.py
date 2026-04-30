@@ -11,7 +11,9 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+    'default': dj_database_url.config(
+        default=os.getenv('MONGO_URI', 'sqlite:///db.sqlite3')
+    )
 }
 
 INSTALLED_APPS = [
