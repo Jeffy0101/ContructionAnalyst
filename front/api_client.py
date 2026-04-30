@@ -5,7 +5,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
-API_URL = os.getenv('API_URL', 'http://localhost:8000/api')
+API_URL = os.getenv('API_URL', 'https://contructionanalyst.onrender.com')
 
 
 def _headers():
