@@ -14,25 +14,25 @@ def _headers():
 
 
 def register(email, password, name):
-    return requests.post(f'{API_URL}/auth/register', json={
+    return requests.post(f'{API_URL}/api/auth/register', json={
         'email': email, 'password': password, 'name': name
     }).json()
 
 def login(email, password):
-    return requests.post(f'{API_URL}/auth/login', json={
+    return requests.post(f'{API_URL}/api/auth/login', json={
         'email': email, 'password': password
     }).json()
 
 def get_features():
-    return requests.get(f'{API_URL}/features').json()['features']
+    return requests.get(f'{API_URL}/api/features').json()['features']
 
 def analyser(nom_terrain, localisation, donnees):
-    return requests.post(f'{API_URL}/analyser', json={
+    return requests.post(f'{API_URL}/api/analyser', json={
         'nom_terrain': nom_terrain, 'localisation': localisation, 'donnees': donnees
     }, headers=_headers()).json()
 
 def historique():
-    return requests.get(f'{API_URL}/historique', headers=_headers()).json()
+    return requests.get(f'{API_URL}/api/historique', headers=_headers()).json()
 
 def dataset():
-    return requests.get(f'{API_URL}/dataset').json()
+    return requests.get(f'{API_URL}/api/dataset').json()
